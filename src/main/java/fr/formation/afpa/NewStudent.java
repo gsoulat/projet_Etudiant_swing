@@ -28,7 +28,6 @@ import fr.formation.afpa.model.Etudiant;
 import fr.formation.afpa.service.EtudiantService;
 import fr.formation.afpa.service.IEtudiantService;
 import javafx.application.Application;
-import javafx.stage.Stage;
 
 public class NewStudent extends Application {
 
@@ -242,13 +241,13 @@ public class NewStudent extends Application {
 				tNom.setText("");
 				tPrenom.setText("");
 				tDate.setText("");
-				service.listEtudiant();
-				java.util.List<Etudiant> student = (java.util.List<Etudiant>) new Etudiant();
-				student =  service.listEtudiant();
-				System.out.println(student.toString());
+				
+				ArrayList student1 = new ArrayList();
+				student1 =  (ArrayList) service.listEtudiant();
+				System.out.println(student1.toString());
 
-//				table.boundRow(new Object[] { student.getIdEtudiant(), student.getPrenom(), student.getNom(),
-//						student.getDateNaissance()
+//				table.boundRow(new Object[] { ((Etudiant) student).getIdEtudiant(), ((Etudiant) student).getPrenom(), ((Etudiant) student).getNom(),
+//						((Etudiant) student).getDateNaissance()
 //
 //				});
 			}
