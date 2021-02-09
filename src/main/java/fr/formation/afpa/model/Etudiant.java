@@ -1,17 +1,25 @@
 package fr.formation.afpa.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Etudiant {
+public class Etudiant implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nom;
 	private String prenom;
 	private String dateNaissance;
+	
 	List<Integer> notes;
-//	Static id;
-//	
-//	Static {
-//		id++;
-//	}
+	
+	static int id;
+	private int idEtudiant;
+	
+	static {
+		id++;
+	}
 	
 	
 	public String getNom() {
@@ -48,6 +56,7 @@ public class Etudiant {
 
 	public Etudiant(String nom, String prenom, String dateNaissance) {
 		super();
+		idEtudiant = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateNaissance = dateNaissance;
@@ -59,7 +68,10 @@ public class Etudiant {
 				+ "]";
 	}
 
+	public int getIdEtudiant() {
+		return idEtudiant;
+	}
+
 	public Etudiant() {
-		// TODO Auto-generated constructor stub
 	}
 }
