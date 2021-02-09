@@ -11,6 +11,7 @@ public class Etudiant implements Serializable{
 	private String nom;
 	private String prenom;
 	private String dateNaissance;
+	private String photo;
 	
 	List<Integer> notes;
 	
@@ -61,11 +62,22 @@ public class Etudiant implements Serializable{
 		this.prenom = prenom;
 		this.dateNaissance = dateNaissance;
 	}
+	
+	public Etudiant(String nom, String prenom, String dateNaissance, String photo) {
+		super();
+		idEtudiant = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.dateNaissance = dateNaissance;
+		this.photo = photo;
+	}
+
+
 
 	@Override
 	public String toString() {
-		return "Etudiant [nom=" + nom + ", prenom=" + prenom + ", dateNaissance=" + dateNaissance + ", notes=" + notes
-				+ "]";
+		return "Etudiant [nom=" + nom + ", prenom=" + prenom + ", dateNaissance=" + dateNaissance + ", photo=" + photo
+				+ ", notes=" + notes + ", idEtudiant=" + idEtudiant + "]";
 	}
 
 	public int getIdEtudiant() {
@@ -73,5 +85,13 @@ public class Etudiant implements Serializable{
 	}
 
 	public Etudiant() {
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 }

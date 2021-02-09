@@ -20,16 +20,17 @@ public class EtudiantDaoFile implements IEtudiantDao{
 		try {
 			InputStream is = new FileInputStream("best/obj.txt");
 			ObjectInputStream fis = new ObjectInputStream(is);
+			Etudiant etudiant = (Etudiant) fis.readObject();
+			List<Etudiant> ListEtudiant = new ArrayList<Etudiant>();
 			
+			ListEtudiant.add(etudiant);
 			
-			List<Etudiant> etudiant = (List<Etudiant>) fis.readObject();
-//			    for (Etudiant i : etudiant) {
-//			      System.out.println(i.toString());
-//			    }
-		
+			System.out.println(etudiant);
+
 			fis.close();
 			is.close();
-			return etudiant;
+			
+			return ListEtudiant;
 			
 	  } catch (FileNotFoundException fnfe) {
 	    System.out.println("fichier non trouvé");

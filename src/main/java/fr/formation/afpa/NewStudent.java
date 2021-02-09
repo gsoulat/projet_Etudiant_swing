@@ -40,6 +40,7 @@ public class NewStudent extends Application {
 	private IEtudiantService service = new EtudiantService();
 	private JTable table;
 	private JTextField tPhoto;
+	protected Object student;
 
 	/**
 	 * Launch the application.
@@ -92,20 +93,18 @@ public class NewStudent extends Application {
 
 		tDate = new JTextField();
 		tDate.setColumns(10);
-		
+
 		JLabel lblPhoto = new JLabel("photo");
-		
+
 		tPhoto = new JTextField();
 		tPhoto.setColumns(10);
-		
-		//Liste des boutons
+
+		// Liste des boutons
 		JButton btnBrowser = new JButton("Parcourir");
 		JButton btnSave = new JButton("Enregistrer");
 		JButton btnModif = new JButton("Modifier");
 		JButton btnAnnul = new JButton("Annuler");
-		JButton btnRetour = new JButton("Retour");
-		
-		
+
 		btnBrowser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser dialogue = new JFileChooser(".");
@@ -125,7 +124,6 @@ public class NewStudent extends Application {
 				}
 			}
 		});
-
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -157,8 +155,7 @@ public class NewStudent extends Application {
 					.addComponent(btnModif)
 					.addGap(5)
 					.addComponent(btnAnnul)
-					.addGap(5)
-					.addComponent(btnRetour))
+					.addGap(76))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -192,8 +189,7 @@ public class NewStudent extends Application {
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnSave)
 						.addComponent(btnModif)
-						.addComponent(btnAnnul)
-						.addComponent(btnRetour)))
+						.addComponent(btnAnnul)))
 		);
 		panel.setLayout(gl_panel);
 
@@ -205,6 +201,10 @@ public class NewStudent extends Application {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "id", "Prenom", "nom", "Date de naissance", "photo" }) {
+			/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] { Integer.class, String.class, String.class, String.class, Object.class };
 
 			public Class getColumnClass(int columnIndex) {
@@ -238,13 +238,19 @@ public class NewStudent extends Application {
 		menuAffiche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.setVisible(false);
-
 				panel_1.setVisible(true);
 				tNom.setText("");
 				tPrenom.setText("");
 				tDate.setText("");
 				service.listEtudiant();
+				java.util.List<Etudiant> student = (java.util.List<Etudiant>) new Etudiant();
+				student =  service.listEtudiant();
+				System.out.println(student.toString());
 
+//				table.boundRow(new Object[] { student.getIdEtudiant(), student.getPrenom(), student.getNom(),
+//						student.getDateNaissance()
+//
+//				});
 			}
 		});
 		mnNewMenu.add(menuAffiche);
@@ -276,14 +282,14 @@ public class NewStudent extends Application {
 				tNom.setEditable(true);
 				tDate.setEditable(true);
 				tPhoto.setEditable(true);
-				
+
 			}
 		});
-		
+
 		btnAnnul.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				java.util.List<Etudiant> student = new ArrayList<Etudiant>();
-				student = service.listEtudiant();
+				panel.setVisible(false);
+				panel_1.setVisible(false);
 			}
 		});
 
@@ -298,7 +304,6 @@ public class NewStudent extends Application {
 		});
 
 	}
-
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
