@@ -9,6 +9,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class image extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private BufferedImage image;
 
     public image() {

@@ -13,39 +13,32 @@ import java.util.List;
 
 import fr.formation.afpa.model.Etudiant;
 
-public class EtudiantDaoFile implements IEtudiantDao{
+public class EtudiantDaoFile implements IEtudiantDao {
 
-	
 	public List<Etudiant> getAll() {
 		try {
 			InputStream is = new FileInputStream("best/obj.txt");
 			ObjectInputStream fis = new ObjectInputStream(is);
-			
+
 			List<Etudiant> ListEtudiant = new ArrayList<Etudiant>();
-			
-			while 
+
 			Etudiant etudiant = (Etudiant) fis.readObject();
 			ListEtudiant.add(etudiant);
-			
 			fis.close();
 			is.close();
 			
 			return ListEtudiant;
-			
-	  } catch (FileNotFoundException fnfe) {
-	    System.out.println("fichier non trouvé");
-	    fnfe.printStackTrace();
-	  } catch (ClassNotFoundException cnfe) {
-	    System.out.println("Fichier format mauvais :(");
-	    cnfe.printStackTrace();
-	  } catch (IOException ioe) {
-	    System.out.println("I/O Exception while reading file");
-	    ioe.printStackTrace();
-	  }
-		return null; 
-		
-		
-		
+		} catch (FileNotFoundException fnfe) {
+			System.out.println("fichier non trouvé");
+			fnfe.printStackTrace();
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("Fichier format mauvais :(");
+			cnfe.printStackTrace();
+		} catch (IOException ioe) {
+			System.out.println("I/O Exception while reading file");
+			ioe.printStackTrace();
+		}
+		return null;
 
 	}
 
@@ -56,7 +49,7 @@ public class EtudiantDaoFile implements IEtudiantDao{
 			oos.writeObject(student);
 			oos.close();
 			os.close();
-			
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,5 +62,6 @@ public class EtudiantDaoFile implements IEtudiantDao{
 	public Etudiant update(Etudiant e) {
 		return null;
 	}
+
 
 }

@@ -20,6 +20,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -39,7 +40,6 @@ public class NewStudent extends Application {
 	private IEtudiantService service = new EtudiantService();
 	private JTable table;
 	private JTextField tPhoto;
-	protected Object student;
 
 	/**
 	 * Launch the application.
@@ -125,71 +125,48 @@ public class NewStudent extends Application {
 		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(3)
-					.addComponent(lblPrnom)
-					.addGap(5)
-					.addComponent(tPrenom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(5)
-					.addComponent(lblNewLabel)
-					.addGap(5)
-					.addComponent(tNom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(5)
-					.addComponent(lblDateNais))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(34)
-					.addComponent(tDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(5)
-					.addComponent(lblPhoto)
-					.addGap(5)
-					.addComponent(tPhoto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(5)
-					.addComponent(btnBrowser))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(47)
-					.addComponent(btnSave)
-					.addGap(5)
-					.addComponent(btnModif)
-					.addGap(5)
-					.addComponent(btnAnnul)
-					.addGap(76))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(5)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblPrnom))
-						.addComponent(tPrenom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblNewLabel))
-						.addComponent(tNom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblDateNais)))
-					.addGap(5)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(tDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(4)
-							.addComponent(lblPhoto))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(tPhoto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnBrowser))
-					.addGap(5)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnSave)
-						.addComponent(btnModif)
-						.addComponent(btnAnnul)))
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(
+						Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(lblPrnom).addGap(5)
+						.addComponent(tPrenom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(5).addComponent(lblNewLabel).addGap(5)
+						.addComponent(tNom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(5).addComponent(lblDateNais))
+				.addGroup(gl_panel.createSequentialGroup().addGap(34)
+						.addComponent(tDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(5).addComponent(lblPhoto).addGap(5)
+						.addComponent(tPhoto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(5).addComponent(btnBrowser))
+				.addGroup(gl_panel.createSequentialGroup().addGap(47).addComponent(btnSave).addGap(5)
+						.addComponent(btnModif).addGap(5).addComponent(btnAnnul).addGap(76)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup().addGap(5)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(lblPrnom))
+								.addComponent(tPrenom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(lblNewLabel))
+								.addComponent(
+										tNom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(lblDateNais)))
+						.addGap(5)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup().addGap(1).addComponent(tDate,
+										GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel.createSequentialGroup().addGap(4).addComponent(lblPhoto))
+								.addGroup(gl_panel.createSequentialGroup().addGap(1).addComponent(tPhoto,
+										GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
+								.addComponent(btnBrowser))
+						.addGap(5).addGroup(gl_panel.createParallelGroup(Alignment.LEADING).addComponent(btnSave)
+								.addComponent(btnModif).addComponent(btnAnnul))));
 		panel.setLayout(gl_panel);
 
 		JPanel panel_1 = new JPanel();
@@ -197,20 +174,7 @@ public class NewStudent extends Application {
 		frmAjouterEtudiant.getContentPane().add(panel_1);
 		panel_1.setVisible(false);
 
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "id", "Prenom", "nom", "Date de naissance", "photo" }) {
-			/**
-					 * 
-					 */
-					private static final long serialVersionUID = 1L;
-			Class[] columnTypes = new Class[] { Integer.class, String.class, String.class, String.class, Object.class };
 
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		panel_1.add(table);
 
 		JMenuBar menuBar_1 = new JMenuBar();
 		frmAjouterEtudiant.setJMenuBar(menuBar_1);
@@ -243,13 +207,33 @@ public class NewStudent extends Application {
 				tDate.setText("");
 				
 				ArrayList student1 = new ArrayList();
-				student1 =  (ArrayList) service.listEtudiant();
-				System.out.println(student1.toString());
+				student1 = (ArrayList) service.listEtudiant();
+				System.out.println(student1.toString());	
+				JTable jt = new JTable();
+				jt.setModel(new DefaultTableModel(
+				        new Object [][] {
+				
+				        },
+				        new String [] {
+				        		"Id", "Prenom", "Nom", "Date Naissance", "Photo"
+				        }
+				    ));
+				
+				DefaultTableModel model = (DefaultTableModel) jt.getModel();
+				Object rowData[] = new Object[5];
+				for(int i = 0; i < student1.size(); i++)
+				{
+					Object etudiant = student1.get(i);
+				    rowData[0] = ((Etudiant) etudiant).getIdEtudiant();
+				    rowData[1] = ((Etudiant) etudiant).getPrenom();
+				    rowData[2] = ((Etudiant) etudiant).getNom();
+				    rowData[3] = ((Etudiant) etudiant).getDateNaissance();
+				    rowData[4] = ((Etudiant) etudiant).getPhoto();
+				    model.addRow(rowData);
+				}
+				JScrollPane sp = new JScrollPane(jt);
+				panel_1.add(sp);
 
-//				table.boundRow(new Object[] { ((Etudiant) student).getIdEtudiant(), ((Etudiant) student).getPrenom(), ((Etudiant) student).getNom(),
-//						((Etudiant) student).getDateNaissance()
-//
-//				});
 			}
 		});
 		mnNewMenu.add(menuAffiche);
@@ -294,8 +278,11 @@ public class NewStudent extends Application {
 
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ArrayList student1 = new ArrayList();
+				student1 = (ArrayList) service.listEtudiant();
 				Etudiant student = new Etudiant(tNom.getText(), tPrenom.getText(), tDate.getText());
-				service.ajouterEtudiant(student);
+				student1.add(student);
+				service.ajouterEtudiant(student1);
 				tNom.setText("");
 				tPrenom.setText("");
 				tDate.setText("");
