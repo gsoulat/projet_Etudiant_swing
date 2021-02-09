@@ -20,13 +20,13 @@ public class EtudiantDaoFile implements IEtudiantDao{
 		try {
 			InputStream is = new FileInputStream("best/obj.txt");
 			ObjectInputStream fis = new ObjectInputStream(is);
-			Etudiant etudiant = (Etudiant) fis.readObject();
+			
 			List<Etudiant> ListEtudiant = new ArrayList<Etudiant>();
 			
+			while 
+			Etudiant etudiant = (Etudiant) fis.readObject();
 			ListEtudiant.add(etudiant);
 			
-			System.out.println(etudiant);
-
 			fis.close();
 			is.close();
 			
