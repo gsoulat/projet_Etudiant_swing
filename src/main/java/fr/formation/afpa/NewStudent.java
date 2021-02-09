@@ -23,14 +23,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import fr.formation.afpa.model.Etudiant;
 import fr.formation.afpa.service.EtudiantService;
 import fr.formation.afpa.service.IEtudiantService;
 import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class NewStudent extends Application {
+public class NewStudent {
 
 	private JFrame frmAjouterEtudiant;
 	private final JLabel lblNewLabel = new JLabel("Nom");
@@ -40,7 +42,7 @@ public class NewStudent extends Application {
 	private IEtudiantService service = new EtudiantService();
 	private JTable table;
 	private JTextField tPhoto;
-
+	private Etudiant student = new Etudiant();
 	/**
 	 * Launch the application.
 	 */
@@ -71,38 +73,49 @@ public class NewStudent extends Application {
 	private void initialize() {
 		frmAjouterEtudiant = new JFrame();
 		frmAjouterEtudiant.setTitle("Ajouter Etudiant");
-		frmAjouterEtudiant.setBounds(100, 100, 450, 300);
+		frmAjouterEtudiant.setBounds(100, 100, 619, 482);
 		frmAjouterEtudiant.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAjouterEtudiant.getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 432, 214);
+		panel.setBounds(0, 0, 601, 396);
 		frmAjouterEtudiant.getContentPane().add(panel);
 		panel.setVisible(false);
 
 		JLabel lblPrnom = new JLabel("Prénom");
+		lblPrnom.setBounds(170, 95, 44, 16);
 
 		tPrenom = new JTextField();
+		tPrenom.setBounds(225, 92, 116, 22);
 		tPrenom.setColumns(10);
 
 		tNom = new JTextField();
+		tNom.setBounds(225, 127, 116, 22);
 		tNom.setColumns(10);
 
 		JLabel lblDateNais = new JLabel("Date de naissance");
+		lblDateNais.setBounds(110, 171, 104, 16);
 
 		tDate = new JTextField();
+		tDate.setBounds(225, 168, 116, 22);
 		tDate.setColumns(10);
 
 		JLabel lblPhoto = new JLabel("photo");
+		lblPhoto.setBounds(169, 233, 32, 16);
 
 		tPhoto = new JTextField();
+		tPhoto.setBounds(224, 230, 116, 22);
 		tPhoto.setColumns(10);
 
 		// Liste des boutons
 		JButton btnBrowser = new JButton("Parcourir");
+		btnBrowser.setBounds(352, 229, 85, 25);
 		JButton btnSave = new JButton("Enregistrer");
+		btnSave.setBounds(132, 290, 95, 25);
 		JButton btnModif = new JButton("Modifier");
+		btnModif.setBounds(256, 290, 79, 25);
 		JButton btnAnnul = new JButton("Annuler");
+		btnAnnul.setBounds(371, 290, 77, 25);
 
 		btnBrowser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,54 +136,23 @@ public class NewStudent extends Application {
 				}
 			}
 		});
-
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(
-						Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(lblPrnom).addGap(5)
-						.addComponent(tPrenom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(5).addComponent(lblNewLabel).addGap(5)
-						.addComponent(tNom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(5).addComponent(lblDateNais))
-				.addGroup(gl_panel.createSequentialGroup().addGap(34)
-						.addComponent(tDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(5).addComponent(lblPhoto).addGap(5)
-						.addComponent(tPhoto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(5).addComponent(btnBrowser))
-				.addGroup(gl_panel.createSequentialGroup().addGap(47).addComponent(btnSave).addGap(5)
-						.addComponent(btnModif).addGap(5).addComponent(btnAnnul).addGap(76)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup().addGap(5)
-						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(lblPrnom))
-								.addComponent(tPrenom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(lblNewLabel))
-								.addComponent(
-										tNom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(lblDateNais)))
-						.addGap(5)
-						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup().addGap(1).addComponent(tDate,
-										GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panel.createSequentialGroup().addGap(4).addComponent(lblPhoto))
-								.addGroup(gl_panel.createSequentialGroup().addGap(1).addComponent(tPhoto,
-										GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))
-								.addComponent(btnBrowser))
-						.addGap(5).addGroup(gl_panel.createParallelGroup(Alignment.LEADING).addComponent(btnSave)
-								.addComponent(btnModif).addComponent(btnAnnul))));
-		panel.setLayout(gl_panel);
+		panel.setLayout(null);
+		panel.add(lblPrnom);
+		panel.add(tPrenom);
+		lblNewLabel.setBounds(170, 130, 26, 16);
+		panel.add(lblNewLabel);
+		panel.add(tNom);
+		panel.add(lblDateNais);
+		panel.add(tDate);
+		panel.add(lblPhoto);
+		panel.add(tPhoto);
+		panel.add(btnBrowser);
+		panel.add(btnSave);
+		panel.add(btnModif);
+		panel.add(btnAnnul);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 432, 214);
+		panel_1.setBounds(0, 0, 601, 396);
 		frmAjouterEtudiant.getContentPane().add(panel_1);
 		panel_1.setVisible(false);
 
@@ -207,6 +189,7 @@ public class NewStudent extends Application {
 				tDate.setText("");
 				
 				ArrayList<Etudiant> student1 = new ArrayList();
+				
 				student1 = (ArrayList) service.listEtudiant();
 				System.out.println(student1.toString());	
 				JTable jt = new JTable();
@@ -218,7 +201,7 @@ public class NewStudent extends Application {
 				        		"Id", "Prenom", "Nom", "Date Naissance", "Photo"
 				        }
 				    ));
-				
+	
 				DefaultTableModel model = (DefaultTableModel) jt.getModel();
 				Object rowData[] = new Object[5];
 				for(int i = 0; i < student1.size(); i++)
@@ -230,6 +213,7 @@ public class NewStudent extends Application {
 				    rowData[3] = ((Etudiant) etudiant).getDateNaissance();
 				    rowData[4] = ((Etudiant) etudiant).getPhoto();
 				    model.addRow(rowData);
+				    
 				}
 				JScrollPane sp = new JScrollPane(jt);
 				panel_1.add(sp);
@@ -278,10 +262,10 @@ public class NewStudent extends Application {
 
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				Etudiant student = new Etudiant(tNom.getText(), tPrenom.getText(), tDate.getText(), tPhoto.getText());
-
+//				Etudiant student = new Etudiant(tNom.getText(), tPrenom.getText(), tDate.getText(), tPhoto.getText());
+				student = new Etudiant(tNom.getText(), tPrenom.getText(), tDate.getText(), tPhoto.getText());
 				service.ajouterEtudiant(student);
+				
 				tNom.setText("");
 				tPrenom.setText("");
 				tDate.setText("");
@@ -290,4 +274,5 @@ public class NewStudent extends Application {
 		});
 
 	}
+
 }

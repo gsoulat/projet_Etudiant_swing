@@ -72,7 +72,14 @@ public class Etudiant implements Serializable{
 		this.photo = photo;
 	}
 
-
+	public Etudiant(int id,String nom, String prenom, String dateNaissance, String photo) {
+		super();
+		idEtudiant = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.dateNaissance = dateNaissance;
+		this.photo = photo;
+	}
 
 	@Override
 	public String toString() {

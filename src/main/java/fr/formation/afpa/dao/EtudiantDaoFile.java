@@ -15,24 +15,25 @@ import java.util.List;
 import fr.formation.afpa.model.Etudiant;
 
 public class EtudiantDaoFile implements IEtudiantDao {
-	
+
 	public List<Etudiant> getAll() {
 		try {
-			File fichier = new File("best/obj.txt");
-
-				InputStream is = new FileInputStream(fichier);
-				
-				ObjectInputStream fis = new ObjectInputStream(is);
-				
-				List<Etudiant> ListEtudiant = new ArrayList<Etudiant>();
-
-				Etudiant etudiant = (Etudiant) fis.readObject();
-				ListEtudiant.add(etudiant);
-				fis.close();
-				is.close();
-
-				return ListEtudiant;
+			File fichier = new File("best/obj2.txt");
+			if(!fichier.exists())
+				fichier.createNewFile();
 			
+			InputStream is = new FileInputStream(fichier);
+
+			ObjectInputStream fis = new ObjectInputStream(is);
+
+			List<Etudiant> listEtudiant = new ArrayList<Etudiant>();
+
+			listEtudiant = (List<Etudiant>) fis.readObject();
+			fis.close();
+			is.close();
+
+			return listEtudiant;
+
 		} catch (FileNotFoundException fnfe) {
 			System.out.println("fichier non trouvé");
 			fnfe.printStackTrace();
@@ -49,21 +50,20 @@ public class EtudiantDaoFile implements IEtudiantDao {
 
 	public void add(Etudiant student) {
 		try {
-			OutputStream os = new FileOutputStream("best/obj.txt");
-			ObjectOutputStream oos = new ObjectOutputStream(os);
+			ArrayList<Etudiant> student1  = (ArrayList<Etudiant>) getAll();
 			
-//			ArrayList<Etudiant> student1 = new ArrayList();
-//			student1 = (ArrayList<Etudiant>) getAll();
-//	
-//			for (int i = 0; i < student1.size(); i++) {
-//				
-//				Etudiant arrayEtudiant = student1.get(i);
-//
-//				oos.writeObject(arrayEtudiant);
-//			}
+			if(student1 != null)
+				student1.add(student);
+			else
+				student1 = new ArrayList<Etudiant>();
+			
+			
+			OutputStream os = new FileOutputStream("best/obj2.txt");
+			ObjectOutputStream oos = new ObjectOutputStream(os);		
 
-			oos.writeObject(student);
-			
+
+			oos.writeObject(student1);
+
 			oos.close();
 			os.close();
 
@@ -79,7 +79,5 @@ public class EtudiantDaoFile implements IEtudiantDao {
 	public Etudiant update(Etudiant e) {
 		return null;
 	}
-
-
 
 }
