@@ -206,7 +206,7 @@ public class NewStudent extends Application {
 				tPrenom.setText("");
 				tDate.setText("");
 				
-				ArrayList student1 = new ArrayList();
+				ArrayList<Etudiant> student1 = new ArrayList();
 				student1 = (ArrayList) service.listEtudiant();
 				System.out.println(student1.toString());	
 				JTable jt = new JTable();
@@ -278,14 +278,14 @@ public class NewStudent extends Application {
 
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList student1 = new ArrayList();
-				student1 = (ArrayList) service.listEtudiant();
-				Etudiant student = new Etudiant(tNom.getText(), tPrenom.getText(), tDate.getText());
-				student1.add(student);
-				service.ajouterEtudiant(student1);
+
+				Etudiant student = new Etudiant(tNom.getText(), tPrenom.getText(), tDate.getText(), tPhoto.getText());
+
+				service.ajouterEtudiant(student);
 				tNom.setText("");
 				tPrenom.setText("");
 				tDate.setText("");
+				tPhoto.setText("");
 			}
 		});
 

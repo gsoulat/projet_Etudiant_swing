@@ -1,5 +1,6 @@
 package fr.formation.afpa.dao;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,20 +15,24 @@ import java.util.List;
 import fr.formation.afpa.model.Etudiant;
 
 public class EtudiantDaoFile implements IEtudiantDao {
-
+	
 	public List<Etudiant> getAll() {
 		try {
-			InputStream is = new FileInputStream("best/obj.txt");
-			ObjectInputStream fis = new ObjectInputStream(is);
+			File fichier = new File("best/obj.txt");
 
-			List<Etudiant> ListEtudiant = new ArrayList<Etudiant>();
+				InputStream is = new FileInputStream(fichier);
+				
+				ObjectInputStream fis = new ObjectInputStream(is);
+				
+				List<Etudiant> ListEtudiant = new ArrayList<Etudiant>();
 
-			Etudiant etudiant = (Etudiant) fis.readObject();
-			ListEtudiant.add(etudiant);
-			fis.close();
-			is.close();
+				Etudiant etudiant = (Etudiant) fis.readObject();
+				ListEtudiant.add(etudiant);
+				fis.close();
+				is.close();
+
+				return ListEtudiant;
 			
-			return ListEtudiant;
 		} catch (FileNotFoundException fnfe) {
 			System.out.println("fichier non trouvé");
 			fnfe.printStackTrace();
@@ -46,7 +51,19 @@ public class EtudiantDaoFile implements IEtudiantDao {
 		try {
 			OutputStream os = new FileOutputStream("best/obj.txt");
 			ObjectOutputStream oos = new ObjectOutputStream(os);
+			
+//			ArrayList<Etudiant> student1 = new ArrayList();
+//			student1 = (ArrayList<Etudiant>) getAll();
+//	
+//			for (int i = 0; i < student1.size(); i++) {
+//				
+//				Etudiant arrayEtudiant = student1.get(i);
+//
+//				oos.writeObject(arrayEtudiant);
+//			}
+
 			oos.writeObject(student);
+			
 			oos.close();
 			os.close();
 
@@ -62,6 +79,7 @@ public class EtudiantDaoFile implements IEtudiantDao {
 	public Etudiant update(Etudiant e) {
 		return null;
 	}
+
 
 
 }
