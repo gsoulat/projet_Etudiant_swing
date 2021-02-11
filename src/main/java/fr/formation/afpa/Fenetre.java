@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +39,9 @@ import fr.formation.afpa.model.Etudiant;
 import fr.formation.afpa.service.EtudiantService;
 import fr.formation.afpa.service.IEtudiantService;
 
-public class Fenetre extends JFrame implements TableModelListener{
+public class Fenetre extends JFrame implements TableModelListener {
 	private JLabel lblPrenom, lblNom, lblDate, lblPhoto, lblBienvenue, lblImg;
-	private JPanel jPanelCreationEtudiant, pConnecter,pAffiche, pHome;
+	private JPanel jPanelCreationEtudiant, pConnecter, pAffiche, pHome;
 	private JTextField tPrenom, tNom, tPhoto, tLogin;
 	private JMenuBar menuBar;
 	private JMenu MenuEtudiant;
@@ -55,7 +57,6 @@ public class Fenetre extends JFrame implements TableModelListener{
 	private List<Etudiant> listEtudiantAff;
 	private JScrollPane sp;
 	DefaultTableModel model;
-
 
 	public Fenetre() {
 		// Création de la fenetre.
@@ -112,10 +113,10 @@ public class Fenetre extends JFrame implements TableModelListener{
 				lblImg.revalidate();// Obligatoire pour vider l'image
 			}
 		});
-		
+
 		jt = new JTable();
 		jt.setBounds(0, 0, 700, 500);
-		
+
 		MenuEtudiant.add(menuAdd);
 		menuSearch = new JMenuItem("Lister les étudiants");
 		menuSearch.addActionListener(new ActionListener() {
@@ -123,11 +124,11 @@ public class Fenetre extends JFrame implements TableModelListener{
 				jPanelCreationEtudiant.setVisible(false);
 				pConnecter.setVisible(false);
 				pAffiche.setVisible(true);
-				fenetre.setSize(700,1000);
+				fenetre.setSize(700, 1000);
 				pAffiche.setBounds(0, 0, 700, 1000);
 				tNom.setText("");
 				tPrenom.setText("");
-				
+
 				List<Etudiant> listEtudiantAff = new ArrayList<Etudiant>();
 				listEtudiantAff = service.listEtudiant();
 
@@ -144,12 +145,11 @@ public class Fenetre extends JFrame implements TableModelListener{
 					rowData[3] = ((Etudiant) etudiant).getDateNaissance();
 					rowData[4] = ((Etudiant) etudiant).getPhoto();
 					model.addRow(rowData);
-				}		
+				}
 				jt.setModel(model);
-				JScrollPane sp = new JScrollPane(jt);		
-		        pAffiche.add(sp);
+				JScrollPane sp = new JScrollPane(jt);
+				pAffiche.add(sp);
 
-		     
 			}
 		});
 		MenuEtudiant.add(menuSearch);
@@ -168,7 +168,7 @@ public class Fenetre extends JFrame implements TableModelListener{
 		MenuEtudiant.add(menuDeco);
 		fenetre.setJMenuBar(menuBar);
 		menuBar.setVisible(false);
-		
+
 		UtilDateModel modelDate = new UtilDateModel();
 		Properties pDate = new Properties();
 		pDate.put("text.today", "Today");
@@ -285,10 +285,45 @@ public class Fenetre extends JFrame implements TableModelListener{
 		jPanelCreationEtudiant.add(tPhoto);
 		jPanelCreationEtudiant.add(lblDate);
 
+		jt.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pAffiche.setVisible(false);
+				jPanelCreationEtudiant.setVisible(true);
+				
+			}
+		});
+		
+		
 		// Liste des boutons
 		btnBrowser = new JButton("Parcourir");
 		btnBrowser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
+			public void actionPerformed(ActionEvent e) {
 				JFileChooser file = new JFileChooser();
 				file.setCurrentDirectory(new File(System.getProperty("user.home")));
 				// filtrer les fichiers
@@ -321,9 +356,9 @@ public class Fenetre extends JFrame implements TableModelListener{
 				int nbNom = tNom.getText().length();
 				int nbDate = datePicker.getJFormattedTextField().getText().length();
 				File fichier = new File(tPhoto.getText());
-						
-				if (nbPrenom > 3 && nbNom > 3 && nbDate>0 && fichier.exists()) {
-					Etudiant studentAdd = new Etudiant(tNom.getText(), tPrenom.getText(),
+
+				if (nbPrenom > 3 && nbNom > 3 && nbDate > 0 && fichier.exists()) {
+					Etudiant studentAdd = new Etudiant(numAuto(), tNom.getText(), tPrenom.getText(),
 							datePicker.getJFormattedTextField().getText(), tPhoto.getText());
 					service.ajouterEtudiant(studentAdd);
 					tNom.setText("");
@@ -332,31 +367,21 @@ public class Fenetre extends JFrame implements TableModelListener{
 					lblImg.setIcon(null);
 					datePicker.getJFormattedTextField().setText("");
 					lblImg.revalidate();// Obligatoire pour vider l'image
-					JOptionPane.showMessageDialog(jPanelCreationEtudiant,
-						    "Nouvel étudiant enregistrer",
-						    "MsgBox",
-						    JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(jPanelCreationEtudiant, "Nouvel étudiant enregistrer", "MsgBox",
+							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					if (nbPrenom < 3)
-					JOptionPane.showMessageDialog(jPanelCreationEtudiant,
-						    "le prenom pas assez de caractère",
-						    "Inane error",
-						    JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(jPanelCreationEtudiant, "le prenom pas assez de caractère",
+								"Inane error", JOptionPane.ERROR_MESSAGE);
 					if (nbNom < 3)
-					JOptionPane.showMessageDialog(jPanelCreationEtudiant,
-						    "le nom pas assez de caractère",
-						    "Inane error",
-						    JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(jPanelCreationEtudiant, "le nom pas assez de caractère",
+								"Inane error", JOptionPane.ERROR_MESSAGE);
 					if (nbDate < 3)
-					JOptionPane.showMessageDialog(jPanelCreationEtudiant,
-						    "il faut saisir une date",
-						    "Inane error",
-						    JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(jPanelCreationEtudiant, "il faut saisir une date", "Inane error",
+								JOptionPane.ERROR_MESSAGE);
 					if (!fichier.exists())
-					JOptionPane.showMessageDialog(jPanelCreationEtudiant,
-						    "la photo n'existe pas",
-						    "Inane error",
-						    JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(jPanelCreationEtudiant, "la photo n'existe pas", "Inane error",
+								JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -380,7 +405,7 @@ public class Fenetre extends JFrame implements TableModelListener{
 		});
 		btnAnnul.setBounds(170, 200, 150, 30);
 		jPanelCreationEtudiant.add(btnAnnul);
-		
+
 		lblImg = new JLabel("");
 		lblImg.setBounds(400, 0, 250, 250);
 		jPanelCreationEtudiant.add(lblImg);
@@ -391,7 +416,7 @@ public class Fenetre extends JFrame implements TableModelListener{
 
 		lblBienvenue = new JLabel("New label");
 		pConnecter.add(lblBienvenue);
-		
+
 		pAffiche = new JPanel();
 		pAffiche.setForeground(new Color(240, 230, 140));
 		pAffiche.setBounds(10, 0, 689, 300);
@@ -403,14 +428,17 @@ public class Fenetre extends JFrame implements TableModelListener{
 		fenetre.setVisible(true);
 	}
 
-	public void refreshTable() {
-		
+	public int numAuto() {
+		  List<Etudiant> listEtudiantAff = new ArrayList<Etudiant>();
+			listEtudiantAff = service.listEtudiant();
+			
+		    if (listEtudiantAff.size() == 0) {
+		      return 1;
+		    }
+		    else {
+		    Etudiant etudiant = listEtudiantAff.get(listEtudiantAff.size()-1);
+		      return ((Etudiant) etudiant).getIdEtudiant() + 1;
+		    }
 	}
-	
-	
-	@Override
-	public void tableChanged(TableModelEvent e) {
-		// TODO Auto-generated method stub
-		
-	}	
+
 }

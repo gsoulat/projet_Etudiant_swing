@@ -52,6 +52,7 @@ public class EtudiantDaoFile implements IEtudiantDao {
 	public void add(Etudiant studentAdd) {
 		List<Etudiant> listEtudiant = getAll();
 		listEtudiant.add(studentAdd);
+		System.out.println(listEtudiant);
 		try {
 			OutputStream os = new FileOutputStream(path);
 			ObjectOutputStream oos = new ObjectOutputStream(os);
