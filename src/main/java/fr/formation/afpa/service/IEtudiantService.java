@@ -1,6 +1,5 @@
 package fr.formation.afpa.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.formation.afpa.model.Etudiant;
