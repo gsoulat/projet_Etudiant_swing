@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -111,44 +112,43 @@ public class Fenetre extends JFrame implements TableModelListener{
 				lblImg.revalidate();// Obligatoire pour vider l'image
 			}
 		});
+		
+		jt = new JTable();
+		jt.setBounds(0, 0, 700, 500);
+		
 		MenuEtudiant.add(menuAdd);
 		menuSearch = new JMenuItem("Lister les étudiants");
 		menuSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				jPanelCreationEtudiant.setVisible(false);
 				pConnecter.setVisible(false);
 				pAffiche.setVisible(true);
-				fenetre.setSize(640, 300);
-				pAffiche.setBounds(0, 0, 700, 500);
-				jPanelCreationEtudiant.setVisible(false);
+				fenetre.setSize(700,1000);
+				pAffiche.setBounds(0, 0, 700, 1000);
 				tNom.setText("");
 				tPrenom.setText("");
 				
-			
-				jt = new JTable();
-				jt.setBounds(0, 0, 700, 500);
-				jt.setModel(new DefaultTableModel(new Object[][] {
+				List<Etudiant> listEtudiantAff = new ArrayList<Etudiant>();
+				listEtudiantAff = service.listEtudiant();
 
-				}, new String[] { "Id", "Prenom", "Nom", "Date Naissance", "Photo" }));
-		        List<Etudiant> listEtudiantAff = service.listEtudiant();
-		        	
-				DefaultTableModel model = (DefaultTableModel) jt.getModel();
-				
-				Object rowData[] = new Object[5];
+				Object[] columnNames = { "Id", "Prenom", "Nom", "Date Naissance", "Photo" };
+				DefaultTableModel model = new DefaultTableModel();
+				model.setColumnIdentifiers(columnNames);
+				model.fireTableRowsUpdated(0, listEtudiantAff.size());
+				Object[] rowData = new Object[5];
 				for (int i = 0; i < listEtudiantAff.size(); i++) {
-					Object etudiant = listEtudiantAff.get(i);
+					Etudiant etudiant = listEtudiantAff.get(i);
 					rowData[0] = ((Etudiant) etudiant).getIdEtudiant();
 					rowData[1] = ((Etudiant) etudiant).getPrenom();
 					rowData[2] = ((Etudiant) etudiant).getNom();
 					rowData[3] = ((Etudiant) etudiant).getDateNaissance();
 					rowData[4] = ((Etudiant) etudiant).getPhoto();
 					model.addRow(rowData);
-				}
+				}		
 				jt.setModel(model);
-				model.fireTableDataChanged();
-				pAffiche.add(jt);
 				JScrollPane sp = new JScrollPane(jt);		
 		        pAffiche.add(sp);
-		        model.fireTableDataChanged();
+
 		     
 			}
 		});
@@ -178,7 +178,7 @@ public class Fenetre extends JFrame implements TableModelListener{
 		datePanel.setBounds(170, 80, 150, 30);
 
 		pHome = new JPanel();
-		pHome.setBackground(new Color(173, 255, 47));
+		pHome.setBackground(new Color(102, 205, 170));
 		pHome.setBounds(0, 0, 500, 328);
 		fenetre.getContentPane().add(pHome);
 		pHome.setLayout(null);
@@ -403,7 +403,11 @@ public class Fenetre extends JFrame implements TableModelListener{
 		fenetre.setVisible(true);
 	}
 
-
+	public void refreshTable() {
+		
+	}
+	
+	
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		// TODO Auto-generated method stub
