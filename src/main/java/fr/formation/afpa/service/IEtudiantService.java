@@ -8,7 +8,7 @@ public interface IEtudiantService {
 	
 	public List<Etudiant> listEtudiant();
 	
-	public void ajouterEtudiant(Etudiant e);
+	public void ajouterEtudiant(Etudiant student);
 	
 	public Etudiant modifierEtudiant(Etudiant e);
 	
