@@ -22,7 +22,7 @@ public class EtudiantService implements IEtudiantService {
 		dao.add(e);
 	}
 
-	public Etudiant modifierEtudiant(Etudiant e) {
+	public Etudiant modifierEtudiant(List<Etudiant> e) {
 		return dao.update(e);
 	}
 

@@ -12,7 +12,7 @@ public interface IEtudiantService {
 	
 	public void ajouterEtudiant(Etudiant student);
 	
-	public Etudiant modifierEtudiant(Etudiant e);
+	public Etudiant modifierEtudiant(List<Etudiant> e);
 	
 	public Etudiant trouverEtudiant(int id) throws FileNotFoundException, IOException ;
 

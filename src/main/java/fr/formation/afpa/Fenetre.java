@@ -1,6 +1,7 @@
 package fr.formation.afpa;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -45,7 +46,7 @@ import fr.formation.afpa.service.IEtudiantService;
 
 public class Fenetre extends JFrame implements TableModelListener {
 	private JLabel lblPrenom, lblNom, lblDate, lblPhoto, lblImg;
-	private JPanel pAjout, pAffiche, pHome;
+	private JPanel pAjout, pAffiche, pHome, pNote;
 	private JTextField tPrenom, tNom, tPhoto, tLogin;
 	private JMenuBar menuBar;
 	private JMenu MenuEtudiant;
@@ -61,6 +62,11 @@ public class Fenetre extends JFrame implements TableModelListener {
 	private List<Etudiant> listEtudiantAff;
 	private JScrollPane sp;
 	DefaultTableModel model;
+	private JButton btnModifier;
+	private JButton btnAjoutNote;
+	private JLabel lblID;
+	private int row;
+	private JLabel lblNewLabel;
 
 	public Fenetre() {
 		/**
@@ -173,21 +179,40 @@ public class Fenetre extends JFrame implements TableModelListener {
 		pDate.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(modelDate, pDate);
 		datePanel.setBounds(170, 80, 150, 30);
-		pAffiche = new JPanel();
-		pAffiche.setBackground(new Color(255, 255, 224));
-		pAffiche.setForeground(new Color(240, 230, 140));
-//		fenetre.getContentPane().add(pAffiche);
-		pAffiche.setVisible(false);
+
 		btnCreerPwd.setVisible(false);
 		fenetre.setVisible(true);
 		fenetre.setSize(800, 463);
 		pHome.setBounds(0, 00, largeurFrame, hauteurFrame);
 
+		pAffiche = new JPanel();
+		pAffiche.setForeground(new Color(240, 230, 140));
+		pAffiche.setVisible(true);
+		pAffiche.setBounds(0, 00, largeurFrame, hauteurFrame);
+		pAffiche.setLayout(null);
+		btnModifier = new JButton("Modifier");
+		btnModifier.setBounds(12, 5, 79, 25);
+		pAffiche.add(btnModifier);
+		
+		btnAjoutNote = new JButton("Ajouter notes");
+		btnAjoutNote.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				Onglets.set
+			}
+		});
+		btnAjoutNote.setBounds(103, 5, 109, 25);
+		pAffiche.add(btnAjoutNote);
+
 		/**
 		 * Instantiation de la Jtable pour afficher la base de données étudiant
 		 */
 		jt = new JTable();
-		jt.setBounds(0, 0, largeurFrame, hauteurFrame);
+		jt.setBounds(0, 0, largeurFrame, hauteurFrame - 150);
+		model = new DefaultTableModel();
+		JScrollPane sp = new JScrollPane(jt);
+		sp.setBounds(-2, 35, 800, 325);
+		sp.setPreferredSize(new Dimension(largeurFrame, hauteurFrame - 75));
+		pAffiche.add(sp);
 
 		// Créer le conteneur des onglets
 		JTabbedPane onglets = new JTabbedPane();
@@ -195,6 +220,10 @@ public class Fenetre extends JFrame implements TableModelListener {
 		onglets.setBounds(0, 0, largeurFrame, hauteurFrame);
 		// Associer chaque panneau à l'onglet correspondant
 		onglets.add("Connection", pHome);
+		
+		lblNewLabel = new JLabel("Pour tester : Login : guillaume et password : soulat");
+		lblNewLabel.setBounds(288, 61, 500, 47);
+		pHome.add(lblNewLabel);
 		pAjout = new JPanel();
 		pAjout.setBackground(new Color(173, 216, 230));
 		pAjout.setBounds(10, 313, 681, 250);
@@ -245,6 +274,7 @@ public class Fenetre extends JFrame implements TableModelListener {
 		btnSave.setBounds(10, 200, 150, 30);
 		pAjout.add(btnSave);
 		btnModif = new JButton("Modifier");
+
 		btnModif.setBounds(10, 200, 150, 30);
 		pAjout.add(btnModif);
 		btnAnnul = new JButton("Annuler");
@@ -255,22 +285,32 @@ public class Fenetre extends JFrame implements TableModelListener {
 		pAjout.add(lblImg);
 		pAjout.setVisible(false);
 		pAjout.setBounds(0, 0, largeurFrame, hauteurFrame);
+
 		onglets.add("Ajouter un Etudiant", pAjout);
+		
+		JLabel lblFakeDate = new JLabel("New label");
+		lblFakeDate.setBounds(170, 80, 150, 30);
+		pAjout.add(lblFakeDate);
+		
+		lblID = new JLabel("");
+		lblID.setBounds(332, 7, 56, 16);
+		pAjout.add(lblID);
+		lblID.setVisible(false);
+		lblFakeDate.setVisible(false);
 		onglets.setEnabledAt(1, true);
 
 		onglets.addChangeListener(new ChangeListener() {
-		@Override
-	       public void stateChanged(ChangeEvent e) {
-               if (e.getSource() instanceof JTabbedPane) {
-                   JTabbedPane pane = (JTabbedPane) e.getSource();
-                   if (pane.getSelectedIndex() == 2) {
-                	   updateTableau();
-                   }
-               }
-           }
-       });
-		
-		
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if (e.getSource() instanceof JTabbedPane) {
+					JTabbedPane pane = (JTabbedPane) e.getSource();
+					if (pane.getSelectedIndex() == 2) {
+						updateTableau();
+					}
+				}
+			}
+		});
+
 		// Liste des boutons
 
 		btnBrowser.addActionListener(new ActionListener() {
@@ -344,8 +384,15 @@ public class Fenetre extends JFrame implements TableModelListener {
 				lblImg.revalidate();
 			}
 		});
+
+		pNote = new JPanel();
+		pNote.setBackground(new Color(102, 205, 170));
+
 		onglets.add("Affichage BDD", pAffiche);
-		onglets.setEnabledAt(2, true);
+		onglets.setEnabledAt(1, false);
+		onglets.add("Notes", pNote);
+		onglets.setEnabledAt(2, false);
+		onglets.setEnabledAt(3, false);
 		fenetre.getContentPane().add(onglets);
 
 		// Ajouter les onglets au frame
@@ -365,15 +412,10 @@ public class Fenetre extends JFrame implements TableModelListener {
 
 		menuSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				onglets.setSelectedIndex(2);
 				updateTableau();
-
-				
-
 			}
 		});
-			
-		
-		
 
 		menuDeco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -443,51 +485,30 @@ public class Fenetre extends JFrame implements TableModelListener {
 			}
 		});
 
-		jt.addMouseListener(new MouseListener() {
+		onglets.repaint();
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		btnModifier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				int column = 0;
-				int row = jt.getSelectedRow();
+				row = jt.getSelectedRow();
 				String value = jt.getModel().getValueAt(row, column).toString();
-				System.out.println(value);
-				pAffiche.setVisible(false);
-				pAjout.setVisible(true);
+				onglets.setSelectedIndex(1);
 				btnSave.setVisible(false);
 				btnModif.setVisible(true);
+				lblFakeDate.setVisible(true);
 				tPrenom.setEditable(false);
 				tNom.setEditable(false);
 				tPhoto.setEditable(false);
 				btnBrowser.setVisible(false);
 				datePicker_1.setVisible(false);
+				btnAnnul.setVisible(false);
 
 				try {
 					Etudiant etudiant = service.trouverEtudiant(Integer.parseInt(value));
 					tPrenom.setText(etudiant.getPrenom());
+					lblID.setText(value);
 					tNom.setText(etudiant.getNom());
+					lblFakeDate.setText(etudiant.getDateNaissance());
 					datePicker_1.getJFormattedTextField().setText(etudiant.getDateNaissance());
 					tPhoto.setText(etudiant.getPhoto());
 					ImageIcon icon = new ImageIcon(etudiant.getPhoto());
@@ -501,8 +522,56 @@ public class Fenetre extends JFrame implements TableModelListener {
 				}
 			}
 		});
+		
+		
+		btnModif.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (btnModif.getText() == "Modifier") {
+					btnModif.setText("Enregistrer");
+					lblFakeDate.setVisible(false);
+					tPrenom.setEditable(true);
+					tNom.setEditable(true);
+					tPhoto.setEditable(true);
+					btnBrowser.setVisible(true);
+					datePicker_1.setVisible(true);
+					btnAnnul.setVisible(false);
+					
+				} else {
+					model.setValueAt(lblID.getText(), row, 0);
+					model.setValueAt(tPrenom.getText(), row, 1);
+					model.setValueAt(tNom.getText(), row, 2);
+					model.setValueAt(tPhoto.getText(), row, 4);
+					model.setValueAt(datePicker_1.getJFormattedTextField().getText(), row, 3);
+					btnModif.setText("Modifier");
+					tNom.setText("");
+					tPrenom.setText("");
+					tPhoto.setText("");
+					lblImg.setIcon(null);
+					datePicker_1.getJFormattedTextField().setText("");
+					lblImg.revalidate();// Obligatoire pour vider l'image
+					
+					List<Etudiant> listEtudiantAff = new ArrayList<Etudiant>();
+					List<Etudiant> listEtudiantModif = new ArrayList<Etudiant>();
+					listEtudiantAff = service.listEtudiant();
 
-		pAffiche.setBounds(0, 00, largeurFrame, hauteurFrame);
+					for (int i = 0; i < listEtudiantAff.size(); i++) {
+						String idmodif = jt.getModel().getValueAt(i, 0).toString();
+						String idPrenom = jt.getModel().getValueAt(i, 1).toString();
+						String idNom = jt.getModel().getValueAt(i, 2).toString();
+						String idDate = jt.getModel().getValueAt(i, 3).toString();
+						String idPhoto = jt.getModel().getValueAt(i, 4).toString();
+						Etudiant studentModif = new Etudiant(Integer.parseInt(idmodif), idNom, idPrenom,idDate,idPhoto);
+						listEtudiantModif.add(studentModif);
+						
+					}
+					service.modifierEtudiant(listEtudiantModif);
+					
+					JOptionPane.showMessageDialog(pAjout, "Enregistrement effectué");
+				}
+				
+			}
+		});
+
 	}
 
 	/**
@@ -525,11 +594,11 @@ public class Fenetre extends JFrame implements TableModelListener {
 	public void updateTableau() {
 		List<Etudiant> listEtudiantAff = new ArrayList<Etudiant>();
 		listEtudiantAff = service.listEtudiant();
-
+		model.removeTableModelListener(jt);
 		Object[] columnNames = { "Id", "Prenom", "Nom", "Date Naissance", "Photo" };
-		DefaultTableModel model = new DefaultTableModel();
+		
 		model.setColumnIdentifiers(columnNames);
-		model.fireTableRowsUpdated(0, listEtudiantAff.size());
+		model.fireTableDataChanged();
 		Object[] rowData = new Object[5];
 		for (int i = 0; i < listEtudiantAff.size(); i++) {
 			Etudiant etudiant = listEtudiantAff.get(i);
@@ -541,7 +610,7 @@ public class Fenetre extends JFrame implements TableModelListener {
 			model.addRow(rowData);
 		}
 		jt.setModel(model);
-		JScrollPane sp = new JScrollPane(jt);
-		pAffiche.add(sp);
+
 	}
+	
 }

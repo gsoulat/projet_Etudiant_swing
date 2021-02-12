@@ -80,17 +80,12 @@ public class EtudiantDaoFile implements IEtudiantDao {
 	}
 	
 	
-	public Etudiant update(Etudiant student) {
+	public Etudiant update(List<Etudiant> student) {
 		try {
-			List<Etudiant> listEtudiant = getAll();
-
-			for (int i = 0; i < listEtudiant.size(); i++) {
-				int etudiant = listEtudiant.get(i).getIdEtudiant();
-			}
 
 			OutputStream os = new FileOutputStream(path);
 			ObjectOutputStream oos = new ObjectOutputStream(os);
-			oos.writeObject(listEtudiant);
+			oos.writeObject(student);
 			oos.close();
 			os.close();
 		} catch (FileNotFoundException e) {

@@ -13,7 +13,7 @@ public interface IEtudiantDao {
 	public void add(Etudiant e);
 		
 	
-	public Etudiant update(Etudiant e);
+	public Etudiant update(List<Etudiant> e);
 	
 	public Etudiant findEtudiant(int id) throws FileNotFoundException, IOException;
 
