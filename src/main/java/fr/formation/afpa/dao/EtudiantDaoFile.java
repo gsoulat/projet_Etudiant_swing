@@ -15,7 +15,7 @@ import java.util.List;
 import fr.formation.afpa.model.Etudiant;
 
 public class EtudiantDaoFile implements IEtudiantDao {
-	String path = "best/ob3.txt";
+	String path = "best/ob4.txt";
 
 	public List<Etudiant> getAll() {
 		List<Etudiant> listEtudiant = new ArrayList<Etudiant>();
@@ -66,6 +66,20 @@ public class EtudiantDaoFile implements IEtudiantDao {
 		}
 	}
 
+	public Etudiant findEtudiant(int id) throws FileNotFoundException, IOException {
+		List<Etudiant> listEtudiant = getAll();
+
+		for (int i = 0; i < listEtudiant.size(); i++) {
+			Etudiant etudiant = listEtudiant.get(i);
+			if (id == ((Etudiant) etudiant).getIdEtudiant()) {
+				return etudiant;
+			}
+		}
+		return null;
+		
+	}
+	
+	
 	public Etudiant update(Etudiant student) {
 		try {
 			List<Etudiant> listEtudiant = getAll();

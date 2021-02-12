@@ -1,5 +1,7 @@
 package fr.formation.afpa.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import fr.formation.afpa.model.Etudiant;
@@ -12,6 +14,6 @@ public interface IEtudiantService {
 	
 	public Etudiant modifierEtudiant(Etudiant e);
 	
-	
+	public Etudiant trouverEtudiant(int id) throws FileNotFoundException, IOException ;
 
 }
