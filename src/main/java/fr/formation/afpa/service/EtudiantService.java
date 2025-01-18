@@ -1,5 +1,7 @@
 package fr.formation.afpa.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import fr.formation.afpa.dao.EtudiantDaoFile;
@@ -20,10 +22,12 @@ public class EtudiantService implements IEtudiantService {
 		dao.add(e);
 	}
 
-	public Etudiant modifierEtudiant(Etudiant e) {
+	public Etudiant modifierEtudiant(List<Etudiant> e) {
 		return dao.update(e);
 	}
 
-
-
+	public Etudiant trouverEtudiant(int id) throws FileNotFoundException, IOException {
+		return dao.findEtudiant(id);
+	}
+	
 }
